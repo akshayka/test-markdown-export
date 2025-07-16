@@ -1,0 +1,513 @@
+```
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2])
+plt.gca()
+```
+
+
+    
+<img src="data:image/png;base64,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" />
+    
+
+
+
+```
+import marimo as mo
+
+mo.md("# Welcome to marimo! 🌊🍃")
+```
+
+
+<span class="markdown prose dark:prose-invert"><h1 id="welcome-to-marimo">Welcome to marimo! 🌊🍃</h1></span>
+
+
+
+```
+slider = mo.ui.slider(1, 22)
+```
+
+
+```
+mo.md(
+    f"""
+marimo is a **reactive** Python notebook.
+
+This means that unlike traditional notebooks, marimo notebooks **run
+automatically** when you modify them or
+interact with UI elements, like this slider: {slider}.
+
+{"##" + "🍃" * slider.value}
+"""
+)
+```
+
+
+<span class="markdown prose dark:prose-invert"><span class="paragraph">marimo is a <strong>reactive</strong> Python notebook.</span>
+<span class="paragraph">This means that unlike traditional notebooks, marimo notebooks <strong>run
+automatically</strong> when you modify them or
+interact with UI elements, like this slider: <marimo-ui-element object-id='MJUe-0' random-id='8fdac69a-5ee1-568e-c275-e831e3655397'><marimo-slider data-initial-value='1' data-label='null' data-start='1' data-stop='22' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='false'></marimo-slider></marimo-ui-element>.</span>
+<h2 id="_1">🍃</h2></span>
+
+
+
+```
+mo.accordion(
+    {
+        "Tip: disabling automatic execution": mo.md(
+            rf"""
+        marimo lets you disable automatic execution: just go into the
+        notebook settings and set
+
+        "Runtime > On Cell Change" to "lazy".
+
+        When the runtime is lazy, after running a cell, marimo marks its
+        descendants as stale instead of automatically running them. The
+        lazy runtime puts you in control over when cells are run, while
+        still giving guarantees about the notebook state.
+        """
+        )
+    }
+)
+```
+
+
+<marimo-accordion data-labels='[&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Tip: disabling automatic execution&lt;/span&gt;&lt;/span&gt;&quot;]' data-multiple='false'><div><span class="markdown prose dark:prose-invert"><span class="paragraph">marimo lets you disable automatic execution: just go into the
+notebook settings and set</span>
+<span class="paragraph">"Runtime &gt; On Cell Change" to "lazy".</span>
+<span class="paragraph">When the runtime is lazy, after running a cell, marimo marks its
+descendants as stale instead of automatically running them. The
+lazy runtime puts you in control over when cells are run, while
+still giving guarantees about the notebook state.</span></span></div></marimo-accordion>
+
+
+
+```
+mo.md(
+    """
+    Tip: This is a tutorial notebook. You can create your own notebooks
+    by entering `marimo edit` at the command line.
+    """
+).callout()
+```
+
+
+<marimo-callout-output data-html='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Tip: This is a tutorial notebook. You can create your own notebooks&#92;nby entering &lt;code&gt;marimo edit&lt;/code&gt; at the command line.&lt;/span&gt;&lt;/span&gt;&quot;' data-kind='&quot;neutral&quot;'></marimo-callout-output>
+
+
+## 1. Reactive execution
+
+A marimo notebook is made up of small blocks of Python code called
+cells.
+
+marimo reads your cells and models the dependencies among them: whenever
+a cell that defines a global variable  is run, marimo
+**automatically runs** all cells that reference that variable.
+
+Reactivity keeps your program state and outputs in sync with your code,
+making for a dynamic programming environment that prevents bugs before they
+happen.
+
+
+```
+(
+    mo.md(
+        f"""
+        **✨ Nice!** The value of `changed` is now {changed}.
+
+        When you updated the value of the variable `changed`, marimo
+        **reacted** by running this cell automatically, because this cell
+        references the global variable `changed`.
+
+        Reactivity ensures that your notebook state is always
+        consistent, which is crucial for doing good science; it's also what
+        enables marimo notebooks to double as tools and  apps.
+        """
+    )
+    if changed
+    else mo.md(
+        """
+        **🌊 See it in action.** In the next cell, change the value of the
+        variable  `changed` to `True`, then click the run button.
+        """
+    )
+)
+```
+
+
+<span class="markdown prose dark:prose-invert"><span class="paragraph"><strong>🌊 See it in action.</strong> In the next cell, change the value of the
+variable  <code>changed</code> to <code>True</code>, then click the run button.</span></span>
+
+
+
+```
+changed = False
+```
+
+
+```
+mo.accordion(
+    {
+        "Tip: execution order": (
+            """
+            The order of cells on the page has no bearing on
+            the order in which cells are executed: marimo knows that a cell
+            reading a variable must run after the cell that  defines it. This
+            frees you to organize your code in the way that makes the most
+            sense for you.
+            """
+        )
+    }
+)
+```
+
+
+<marimo-accordion data-labels='[&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Tip: execution order&lt;/span&gt;&lt;/span&gt;&quot;]' data-multiple='false'><div><span class="markdown prose dark:prose-invert"><span class="paragraph">The order of cells on the page has no bearing on
+the order in which cells are executed: marimo knows that a cell
+reading a variable must run after the cell that  defines it. This
+frees you to organize your code in the way that makes the most
+sense for you.</span></span></div></marimo-accordion>
+
+
+**Global names must be unique.** To enable reactivity, marimo imposes a
+constraint on how names appear in cells: no two cells may define the same
+variable.
+
+
+```
+mo.accordion(
+    {
+        "Tip: encapsulation": (
+            """
+            By encapsulating logic in functions, classes, or Python modules,
+            you can minimize the number of global variables in your notebook.
+            """
+        )
+    }
+)
+```
+
+
+<marimo-accordion data-labels='[&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Tip: encapsulation&lt;/span&gt;&lt;/span&gt;&quot;]' data-multiple='false'><div><span class="markdown prose dark:prose-invert"><span class="paragraph">By encapsulating logic in functions, classes, or Python modules,
+you can minimize the number of global variables in your notebook.</span></span></div></marimo-accordion>
+
+
+
+```
+mo.accordion(
+    {
+        "Tip: private variables": (
+            """
+            Variables prefixed with an underscore are "private" to a cell, so
+            they can be defined by multiple cells.
+            """
+        )
+    }
+)
+```
+
+
+<marimo-accordion data-labels='[&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Tip: private variables&lt;/span&gt;&lt;/span&gt;&quot;]' data-multiple='false'><div><span class="markdown prose dark:prose-invert"><span class="paragraph">Variables prefixed with an underscore are "private" to a cell, so
+they can be defined by multiple cells.</span></span></div></marimo-accordion>
+
+
+## 2. UI elements
+
+Cells can output interactive UI elements. Interacting with a UI
+element **automatically triggers notebook execution**: when
+you interact with a UI element, its value is sent back to Python, and
+every cell that references that element is re-run.
+
+marimo provides a library of UI elements to choose from under
+`marimo.ui`.
+
+**🌊 Some UI elements.** Try interacting with the below elements.
+
+
+```
+icon = mo.ui.dropdown(["🍃", "🌊", "✨"], value="🍃")
+```
+
+
+```
+repetitions = mo.ui.slider(1, 16, label=f"number of {icon.value}: ")
+```
+
+
+```
+icon, repetitions
+```
+
+
+
+
+```
+mo.md("# " + icon.value * repetitions.value)
+```
+
+
+<span class="markdown prose dark:prose-invert"><h1 id="_1">🍃</h1></span>
+
+
+## 3. marimo is just Python
+
+marimo cells parse Python (and only Python), and marimo notebooks are
+stored as pure Python files — outputs are _not_ included. There's no
+magical syntax.
+
+The Python files generated by marimo are:
+
+- easily versioned with git, yielding minimal diffs
+- legible for both humans and machines
+- formattable using your tool of choice,
+- usable as Python  scripts, with UI  elements taking their default
+values, and
+- importable by other modules (more on that in the future).
+
+## 4. Running notebooks as apps
+
+marimo notebooks can double as apps. Click the app window icon in the
+bottom-right to see this notebook in "app view."
+
+Serve a notebook as an app with `marimo run` at the command-line.
+Of course, you can use marimo just to level-up your
+notebooking, without ever making apps.
+
+## 5. The `marimo` command-line tool
+
+**Creating and editing notebooks.** Use
+
+```
+marimo edit
+```
+
+in a terminal to start the marimo notebook server. From here
+you can create a new notebook or edit existing ones.
+
+
+**Running as apps.** Use
+
+```
+marimo run notebook.py
+```
+
+to start a webserver that serves your notebook as an app in read-only mode,
+with code cells hidden.
+
+**Convert a Jupyter notebook.** Convert a Jupyter notebook to a marimo
+notebook using `marimo convert`:
+
+```
+marimo convert your_notebook.ipynb > your_app.py
+```
+
+**Tutorials.** marimo comes packaged with tutorials:
+
+- `dataflow`: more on marimo's automatic execution
+- `ui`: how to use UI elements
+- `markdown`: how to write markdown, with interpolated values and
+   LaTeX
+- `plots`: how plotting works in marimo
+- `sql`: how to use SQL
+- `layout`: layout elements in marimo
+- `fileformat`: how marimo's file format works
+- `markdown-format`: for using `.md` files in marimo
+- `for-jupyter-users`: if you are coming from Jupyter
+
+Start a tutorial with `marimo tutorial`; for example,
+
+```
+marimo tutorial dataflow
+```
+
+In addition to tutorials, we have examples in our
+[our GitHub repo](https://www.github.com/marimo-team/marimo/tree/main/examples).
+
+## 6. The marimo editor
+
+Here are some tips to help you get started with the marimo editor.
+
+
+```
+mo.accordion(tips)
+```
+
+
+<marimo-accordion data-labels='[&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Saving&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Running&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Console Output&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Creating, Moving, and Deleting Cells&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Disabling Automatic Execution&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Disabling Cells&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Code Folding&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Code Formatting&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Command Palette&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Keyboard Shortcuts&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Configuration&lt;/span&gt;&lt;/span&gt;&quot;, &quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Exit &amp;amp; Shutdown&lt;/span&gt;&lt;/span&gt;&quot;]' data-multiple='false'><div><span class="markdown prose dark:prose-invert"><span class="paragraph"><strong>Saving</strong></span>
+<ul>
+<li>
+<span class="paragraph"><em>Name</em> your app using the box at the top of the screen, or
+  with <code>Ctrl/Cmd+s</code>. You can also create a named app at the
+  command line, e.g., <code>marimo edit app_name.py</code>.</span>
+</li>
+<li>
+<span class="paragraph"><em>Save</em> by clicking the save icon on the bottom right, or by
+  inputting <code>Ctrl/Cmd+s</code>. By default marimo is configured
+  to autosave.</span>
+</li>
+</ul></span></div><div><span class="markdown prose dark:prose-invert"><ol>
+<li>
+<span class="paragraph"><em>Run a cell</em> by clicking the play ( ▷ ) button on the top
+right of a cell, or by inputting <code>Ctrl/Cmd+Enter</code>.</span>
+</li>
+<li>
+<span class="paragraph"><em>Run a stale cell</em>  by clicking the yellow run button on the
+right of the cell, or by inputting <code>Ctrl/Cmd+Enter</code>. A cell is
+stale when its code has been modified but not run.</span>
+</li>
+<li>
+<span class="paragraph"><em>Run all stale cells</em> by clicking the play ( ▷ ) button on
+the bottom right of the screen, or input <code>Ctrl/Cmd+Shift+r</code>.</span>
+</li>
+</ol></span></div><div><span class="markdown prose dark:prose-invert"><span class="paragraph">Console output (e.g., <code>print()</code> statements) is shown below a
+cell.</span></span></div><div><span class="markdown prose dark:prose-invert"><ol>
+<li>
+<span class="paragraph"><em>Create</em> a new cell above or below a given one by clicking
+    the plus button to the left of the cell, which appears on
+    mouse hover.</span>
+</li>
+<li>
+<span class="paragraph"><em>Move</em> a cell up or down by dragging on the handle to the 
+    right of the cell, which appears on mouse hover.</span>
+</li>
+<li>
+<span class="paragraph"><em>Delete</em> a cell by clicking the trash bin icon. Bring it
+    back by clicking the undo button on the bottom right of the
+    screen, or with <code>Ctrl/Cmd+Shift+z</code>.</span>
+</li>
+</ol></span></div><div><span class="markdown prose dark:prose-invert"><span class="paragraph">Via the notebook settings (gear icon) or footer panel, you
+can disable automatic execution. This is helpful when
+working with expensive notebooks or notebooks that have
+side-effects like database transactions.</span></span></div><div><span class="markdown prose dark:prose-invert"><span class="paragraph">You can disable a cell via the cell context menu.
+marimo will never run a disabled cell or any cells that depend on it.
+This can help prevent accidental execution of expensive computations
+when editing a notebook.</span></span></div><div><span class="markdown prose dark:prose-invert"><span class="paragraph">You can collapse or fold the code in a cell by clicking the arrow
+icons in the line number column to the left, or by using keyboard
+shortcuts.</span>
+<span class="paragraph">Use the command palette (<code>Ctrl/Cmd+k</code>) or a keyboard shortcut to
+quickly fold or unfold all cells.</span></span></div><div><span class="markdown prose dark:prose-invert"><span class="paragraph">If you have <a href="https://github.com/astral-sh/ruff" rel="noopener" target="_blank">ruff</a> installed,
+you can format a cell with the keyboard shortcut <code>Ctrl/Cmd+b</code>.</span></span></div><div><span class="markdown prose dark:prose-invert"><span class="paragraph">Use <code>Ctrl/Cmd+k</code> to open the command palette.</span></span></div><div><span class="markdown prose dark:prose-invert"><span class="paragraph">Open the notebook menu (top-right) or input <code>Ctrl/Cmd+Shift+h</code> to
+view a list of all keyboard shortcuts.</span></span></div><div><span class="markdown prose dark:prose-invert"><span class="paragraph">Configure the editor by clicking the gears icon near the top-right
+of the screen.</span></span></div><div><span class="markdown prose dark:prose-invert"><span class="paragraph">You can leave Marimo &amp; shut down the server by clicking the
+circled X at the top right of the screen and responding
+to the prompt. </span>
+<span class="paragraph">💾 <em>Be sure to save your work first!</em> </span></span></div></marimo-accordion>
+
+
+## Finally, a fun fact
+
+The name "marimo" is a reference to a type of algae that, under
+the right conditions, clumps together to form a small sphere
+called a "marimo moss ball". Made of just strands of algae, these
+beloved assemblages are greater than the sum of their parts.
+
+
+```
+tips = {
+    "Saving": (
+        """
+        **Saving**
+
+        - _Name_ your app using the box at the top of the screen, or
+          with `Ctrl/Cmd+s`. You can also create a named app at the
+          command line, e.g., `marimo edit app_name.py`.
+
+        - _Save_ by clicking the save icon on the bottom right, or by
+          inputting `Ctrl/Cmd+s`. By default marimo is configured
+          to autosave.
+        """
+    ),
+    "Running": (
+        """
+        1. _Run a cell_ by clicking the play ( ▷ ) button on the top
+        right of a cell, or by inputting `Ctrl/Cmd+Enter`.
+
+        2. _Run a stale cell_  by clicking the yellow run button on the
+        right of the cell, or by inputting `Ctrl/Cmd+Enter`. A cell is
+        stale when its code has been modified but not run.
+
+        3. _Run all stale cells_ by clicking the play ( ▷ ) button on
+        the bottom right of the screen, or input `Ctrl/Cmd+Shift+r`.
+        """
+    ),
+    "Console Output": (
+        """
+        Console output (e.g., `print()` statements) is shown below a
+        cell.
+        """
+    ),
+    "Creating, Moving, and Deleting Cells": (
+        """
+        1. _Create_ a new cell above or below a given one by clicking
+            the plus button to the left of the cell, which appears on
+            mouse hover.
+
+        2. _Move_ a cell up or down by dragging on the handle to the 
+            right of the cell, which appears on mouse hover.
+
+        3. _Delete_ a cell by clicking the trash bin icon. Bring it
+            back by clicking the undo button on the bottom right of the
+            screen, or with `Ctrl/Cmd+Shift+z`.
+        """
+    ),
+    "Disabling Automatic Execution": (
+        """
+        Via the notebook settings (gear icon) or footer panel, you
+        can disable automatic execution. This is helpful when
+        working with expensive notebooks or notebooks that have
+        side-effects like database transactions.
+        """
+    ),
+    "Disabling Cells": (
+        """
+        You can disable a cell via the cell context menu.
+        marimo will never run a disabled cell or any cells that depend on it.
+        This can help prevent accidental execution of expensive computations
+        when editing a notebook.
+        """
+    ),
+    "Code Folding": (
+        """
+        You can collapse or fold the code in a cell by clicking the arrow
+        icons in the line number column to the left, or by using keyboard
+        shortcuts.
+
+        Use the command palette (`Ctrl/Cmd+k`) or a keyboard shortcut to
+        quickly fold or unfold all cells.
+        """
+    ),
+    "Code Formatting": (
+        """
+        If you have [ruff](https://github.com/astral-sh/ruff) installed,
+        you can format a cell with the keyboard shortcut `Ctrl/Cmd+b`.
+        """
+    ),
+    "Command Palette": (
+        """
+        Use `Ctrl/Cmd+k` to open the command palette.
+        """
+    ),
+    "Keyboard Shortcuts": (
+        """
+        Open the notebook menu (top-right) or input `Ctrl/Cmd+Shift+h` to
+        view a list of all keyboard shortcuts.
+        """
+    ),
+    "Configuration": (
+        """
+       Configure the editor by clicking the gears icon near the top-right
+       of the screen.
+       """
+    ),
+    "Exit & Shutdown": (
+        """
+       You can leave Marimo & shut down the server by clicking the
+       circled X at the top right of the screen and responding
+       to the prompt. 
+
+       :floppy_disk: _Be sure to save your work first!_ 
+       """
+    ),
+}
+```
+
